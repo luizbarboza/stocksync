@@ -16,7 +16,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { supabase } from "@/lib/supabase"
-import type { Category, Product } from "@/lib/types"
+import type { Product } from "@/lib/types"
 import { EditProductDialog } from "./edit-product-dialog"
 import { StockAdjustmentDialog } from "./stock-adjustment-dialog"
 interface ProductListProps {
