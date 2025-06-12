@@ -36,3 +36,7 @@ export interface StockMovement {
 export interface ProductWithCategory extends Product {
   categories?: Category
 }
+
+export interface StockMovementWithProduct extends StockMovement {
+  products?: Product
+}

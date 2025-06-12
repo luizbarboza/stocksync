@@ -16,11 +16,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { supabase } from "@/lib/supabase"
-import type { Product } from "@/lib/types"
+import type { Product, ProductWithCategory } from "@/lib/types"
 import { EditProductDialog } from "./edit-product-dialog"
 import { StockAdjustmentDialog } from "./stock-adjustment-dialog"
 interface ProductListProps {
-  products: Product[]
+  products: ProductWithCategory[]
   onProductUpdated: () => void
 }
 
@@ -115,7 +115,7 @@ export function ProductList({ products, onProductUpdated }: ProductListProps) {
                   <TableCell>
                     <code className="text-sm">{product.sku || "N/A"}</code>
                   </TableCell>
-                  <TableCell>{(product as any).categories?.name || "Sem categoria"}</TableCell>
+                  <TableCell>{product.categories?.name || "Sem categoria"}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
                       <span className="font-medium">{product.quantity}</span>

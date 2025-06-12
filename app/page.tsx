@@ -6,13 +6,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { supabase } from "@/lib/supabase"
-import type { Product, StockMovement } from "@/lib/types"
+import type { Product, ProductWithCategory, StockMovement, StockMovementWithProduct } from "@/lib/types"
 import { ProductList } from "@/components/product-list"
 import { AddProductDialog } from "@/components/add-product-dialog"
 import { StockMovementsList } from "@/components/stock-movements-list"
+import { PostgrestError, PostgrestSingleResponse } from "@supabase/supabase-js"
 
 export default function InventoryDashboard() {
-  const [products, setProducts] = useState<Product[]>([])
+  const [products, setProducts] = useState<ProductWithCategory[]>([])
   const [movements, setMovements] = useState<StockMovement[]>([])
   const [stats, setStats] = useState({
     totalProducts: 0,
@@ -39,7 +40,7 @@ export default function InventoryDashboard() {
             description
           )
         `)
-        .order("created_at", { ascending: false })
+        .order("created_at", { ascending: false }) as PostgrestSingleResponse<ProductWithCategory[]>
 
       if (productsError) throw productsError
 
@@ -55,7 +56,7 @@ export default function InventoryDashboard() {
           )
         `)
         .order("created_at", { ascending: false })
-        .limit(10)
+        .limit(10) as PostgrestSingleResponse<StockMovementWithProduct[]>
 
       if (movementsError) throw movementsError
 
@@ -107,7 +108,7 @@ export default function InventoryDashboard() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold">StockSync</h1>
-          <p className="text-muted-foreground">Gerencie seus produtos e controle o estoque</p>
+          <p className="text-muted-foreground">Gerenciamento de produtos e controle o estoque</p>
         </div>
         <AddProductDialog onProductAdded={handleProductAdded} />
       </div>
